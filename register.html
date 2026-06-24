@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — AIDE Workshop</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --bg2: #f5f8fd;
+      --bg3: #eef3fb;
+      --accent: #2f6bed;
+      --accent2: #7c5cf0;
+      --accent3: #0ea5e9;
+      --text: #0f172a;
+      --muted: #5b6478;
+      --border: rgba(15, 23, 42, 0.10);
+      --card: #ffffff;
+      --glow: rgba(47, 107, 237, 0.10);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* Nav */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 4rem;
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.875rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    @media (max-width: 700px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
+
+    /* Page header */
+    .reg-bg {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 420px;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(47,107,237,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 30%, rgba(124,92,240,0.08) 0%, transparent 60%);
+      z-index: -1;
+    }
+
+    .reg-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 9rem 1.5rem 5rem;
+    }
+
+    .reg-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.6rem;
+      text-align: center;
+    }
+
+    .reg-title {
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .reg-intro {
+      color: var(--muted);
+      font-size: 1.05rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 1rem;
+    }
+
+    .reg-deadline {
+      display: block;
+      width: fit-content;
+      margin: 0 auto 2.75rem;
+      background: rgba(47, 107, 237, 0.10);
+      border: 1px solid rgba(47, 107, 237, 0.25);
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 0.9rem;
+      padding: 0.5rem 1.1rem;
+      border-radius: 100px;
+    }
+
+    /* Form */
+    .reg-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 14px 40px rgba(15,23,42,0.06);
+    }
+
+    .field-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .field-group > label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+
+    @media (max-width: 560px) {
+      .field-row { grid-template-columns: 1fr; }
+      .reg-form { padding: 1.75rem 1.25rem; }
+    }
+
+    input, select, textarea {
+      width: 100%;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text);
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 0.7rem 0.85rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    input::placeholder, textarea::placeholder { color: #9aa3b8; }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(47, 107, 237, 0.12);
+      background: #fff;
+    }
+
+    textarea { resize: vertical; min-height: 110px; }
+
+    .divider {
+      height: 1px;
+      background: var(--border);
+      margin: 2rem 0;
+    }
+
+    .section-heading {
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.25rem;
+    }
+
+    .submit-btn {
+      display: inline-block;
+      width: 100%;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      color: #fff;
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 12px;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.2s;
+      box-shadow: 0 6px 20px rgba(47, 107, 237, 0.25);
+    }
+    .submit-btn:hover { opacity: 0.92; transform: translateY(-1px); }
+
+    .confirm-msg {
+      display: none;
+      margin-top: 1.5rem;
+      padding: 1rem 1.25rem;
+      background: rgba(16, 185, 129, 0.10);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      border-radius: 12px;
+      color: #047857;
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    footer {
+      border-top: 1px solid var(--border);
+      text-align: center;
+      padding: 2rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="reg-bg"></div>
+
+  <!-- Nav -->
+  <nav>
+    <a href="index.html" class="nav-logo">AIDE</a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#format">Format</a></li>
+      <li><a href="index.html#schedule">Schedule</a></li>
+      <li><a href="index.html#info">Info</a></li>
+    </ul>
+  </nav>
+
+  <div class="reg-wrap">
+    <div class="reg-label">Workshop Registration</div>
+    <h1 class="reg-title">Register for AIDE</h1>
+    <p class="reg-intro">
+      Please use this page to register for the workshop. Even if you are tentative, please express your interest by registering. This will help us to plan for the workshop.
+    </p>
+    <span class="reg-deadline">Registration deadline — July 20, 2026</span>
+
+    <form class="reg-form" id="regForm">
+      <div class="field-group">
+        <label for="facultyName">Name of faculty</label>
+        <div class="field-row">
+          <input type="text" id="facultyName" name="facultyName" placeholder="Full name" required />
+          <input type="email" id="facultyEmail" name="facultyEmail" placeholder="Email" required />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+      <div class="section-heading">Research Team Members</div>
+
+      <div class="field-group">
+        <label for="member1">Research team member 1</label>
+        <div class="field-row">
+          <input type="text" id="member1" name="member1" placeholder="Full name" />
+          <input type="email" id="member1Email" name="member1Email" placeholder="Email" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="member2">Research team member 2</label>
+        <div class="field-row">
+          <input type="text" id="member2" name="member2" placeholder="Full name" />
+          <input type="email" id="member2Email" name="member2Email" placeholder="Email" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="member3">Research team member 3</label>
+        <div class="field-row">
+          <input type="text" id="member3" name="member3" placeholder="Full name" />
+          <input type="email" id="member3Email" name="member3Email" placeholder="Email" />
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="field-group">
+        <label for="researchArea">Area of research</label>
+        <input type="text" id="researchArea" name="researchArea" placeholder="e.g. computational biology, optimization, materials science" required />
+      </div>
+
+      <div class="field-group">
+        <label for="attendance">Attendance confirmation</label>
+        <select id="attendance" name="attendance" required>
+          <option value="" disabled selected>Select one…</option>
+          <option value="definitely">I will definitely attend</option>
+          <option value="thinking">Still thinking about it</option>
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="other">Any other information you wish to share</label>
+        <textarea id="other" name="other" placeholder="Optional"></textarea>
+      </div>
+
+      <button type="submit" class="submit-btn">Submit Registration</button>
+
+      <div class="confirm-msg" id="confirmMsg">
+        Thank you for registering! We've recorded your interest and will be in touch with workshop details.
+      </div>
+    </form>
+  </div>
+
+  <footer>
+    <p>AIDE Workshop &mdash; August 10–14, 2026 &mdash; Agentic Intelligence for Discovery and Exploration</p>
+  </footer>
+
+  <script>
+    // Paste your Google Apps Script Web app URL between the quotes below.
+    // (See google-apps-script.gs for setup steps.)
+    const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbypODpIBZwOno6OQOE6M25gfN6FzedrtsuLZMsWLmJABAGGmwZMm-MNsnjs5qht3CqIIQ/exec";
+
+    const form = document.getElementById('regForm');
+    const btn = form.querySelector('.submit-btn');
+    const confirmMsg = document.getElementById('confirmMsg');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      btn.disabled = true;
+      btn.textContent = 'Submitting…';
+
+      if (!SHEETS_ENDPOINT || SHEETS_ENDPOINT.indexOf('http') !== 0) {
+        // Endpoint not configured yet — confirm locally so the page still works.
+        showSuccess();
+        return;
+      }
+
+      fetch(SHEETS_ENDPOINT, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: new FormData(form)
+      })
+        .then(showSuccess)
+        .catch(function () {
+          btn.disabled = false;
+          btn.textContent = 'Submit Registration';
+          alert('Sorry, something went wrong submitting your registration. Please try again.');
+        });
+    });
+
+    function showSuccess() {
+      confirmMsg.style.display = 'block';
+      btn.textContent = 'Submitted ✓';
+      btn.disabled = true;
+      confirmMsg.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  </script>
+</body>
+</html>
